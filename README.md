@@ -10,34 +10,13 @@ Docker-based PowerDNS setup and management tools. Offers quick deployment and ea
    cd powerdns-docker
    ```
 
-2. (Optional) Modify the `.env` file to customize environment variables.
+2.  Modify envs in docker-compose.yml to customize environment variables.
 
 3. Start the services:
    ```
-   docker-compose up -d
+   docker compose up -d
    ```
 
-## Components
-
-This setup includes the following components:
-
-- PowerDNS Recursor
-- PowerDNS Server (Master)
-- PowerDNS Server (Slave)
-- MariaDB (MySQL)
-- PowerDNS Admin
-- phpMyAdmin
-
-## Configuration
-
-The `docker-compose.yml` file defines the following services:
-
-1. `pdns-recursor-mysql`: PowerDNS Recursor
-2. `mariadb`: MySQL database
-3. `phpmyadmin`: Web interface for MySQL management
-4. `pdns-mysql-master`: PowerDNS master server
-5. `pdns-mysql-slave`: PowerDNS slave server
-6. `pdns-admin-mysql`: PowerDNS Admin interface
 
 ### Customization
 
@@ -64,11 +43,18 @@ After starting the services, you can:
 1. Access PowerDNS Admin at `http://localhost:8080`
 2. Manage the database using phpMyAdmin at `http://localhost:8989`
 3. Configure your DNS clients to use the PowerDNS server at the host's IP address
+4. after completing the installation you should modify /etc/resolv.con
+```
+nameserver 127.0.0.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+#nameserver 127.0.0.53
+```
+5. `dig @127.0.0.1 server.example.local` check your local domain
 
 ## Security Notes
 
 - Remember to change default passwords in a production environment.
-- The API key and other sensitive information should be stored securely, not in the Docker Compose file.
 
 ## Troubleshooting
 
@@ -83,4 +69,3 @@ If you encounter any issues:
    docker compose ps
    ```
 3. Verify network connectivity between containers.
-
